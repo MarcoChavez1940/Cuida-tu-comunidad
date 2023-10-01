@@ -87,11 +87,19 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        $task->delete();
-        $data = [
-          'message' => 'Task deleted successfully',
-          'task' => $task
-        ];
-        return response()->json($data);
+        if($task->likes == 0){
+          $task->delete();
+          $data = [
+            'message' => 'Task deleted successfully',
+            'task' => $task
+          ];
+          return response()->json($data);
+        } else {
+          $data = [
+            'message' => 'Can not delete task with likes',
+            'task' => $task
+          ];
+          return response()->json($data);
+        }
     }
 }
