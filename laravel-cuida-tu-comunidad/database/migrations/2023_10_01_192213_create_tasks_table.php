@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('description');
             $table->timestamps();
             $table->string('author');
-            $table->double('likes');
+            $table->double('likes')->default('0');
 
             $table->foreign('state_id')->references('id')->on('states')->cascadeOnDelete();
         });

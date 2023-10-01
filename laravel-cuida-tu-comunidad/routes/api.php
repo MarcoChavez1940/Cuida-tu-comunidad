@@ -18,4 +18,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/states', 'App\Http\Controllers\StateController@index');
+Route::post('/states', 'App\Http\Controllers\StateController@store');
+Route::get('/states/{state}', 'App\Http\Controllers\StateController@show');
+Route::put('/states/{state}', 'App\Http\Controllers\StateController@update');
+Route::delete('/states/{state}', 'App\Http\Controllers\StateController@destroy');
+
+
 Route::get('/tasks', 'App\Http\Controllers\TaskController@index');
+Route::post('/tasks', 'App\Http\Controllers\TaskController@store');
+Route::get('/tasks/{task}', 'App\Http\Controllers\TaskController@show');
+Route::put('/tasks/{task}', 'App\Http\Controllers\TaskController@update');
+Route::delete('/tasks/{task}', 'App\Http\Controllers\TaskController@destroy');

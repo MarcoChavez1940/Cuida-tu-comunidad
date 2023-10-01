@@ -12,7 +12,8 @@ class StateController extends Controller
      */
     public function index()
     {
-        //
+      $states = State::all();
+      return response()->json($states);
     }
 
     /**
@@ -28,7 +29,16 @@ class StateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $state = new State;
+        $state->name = $request->name;
+        $state->initials = $request->initials;
+
+        $state->save();
+        $data = [
+          'message' => 'State created successfully',
+          'state' => $state
+        ];
+        return response()->json($data);
     }
 
     /**
@@ -36,7 +46,7 @@ class StateController extends Controller
      */
     public function show(State $state)
     {
-        //
+        return response()->json($state);
     }
 
     /**
@@ -52,7 +62,15 @@ class StateController extends Controller
      */
     public function update(Request $request, State $state)
     {
-        //
+        $state->name = $request->name;
+        $state->initials = $request->initials;
+
+        $state->save();
+        $data = [
+          'message' => 'State updated successfully',
+          'state' => $state
+        ];
+        return response()->json($data);
     }
 
     /**
@@ -60,6 +78,11 @@ class StateController extends Controller
      */
     public function destroy(State $state)
     {
-        //
+        $state->delete();
+        $data = [
+          'message' => 'State deleted successfully',
+          'state' => $state
+        ];
+        return response()->json($data);
     }
 }

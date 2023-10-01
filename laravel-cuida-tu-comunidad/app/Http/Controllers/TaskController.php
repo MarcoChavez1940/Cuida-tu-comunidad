@@ -29,7 +29,18 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $task = new Task;
+        $task->title = $request->title;
+        $task->description = $request->description;
+        $task->author = $request->author;
+        $task->state_id = $request->state_id;
+
+        $task->save();
+        $data = [
+          'message' => 'Task created successfully',
+          'task' => $task
+        ];
+        return response()->json($data);
     }
 
     /**
@@ -37,7 +48,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return response()->json($task);
     }
 
     /**
@@ -53,7 +64,14 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $task->likes = $task->likes + 1;
+
+        $task->save();
+        $data = [
+          'message' => 'Task updated successfully',
+          'task' => $task
+        ];
+        return response()->json($data);
     }
 
     /**
@@ -61,6 +79,11 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        $data = [
+          'message' => 'Task deleted successfully',
+          'task' => $task
+        ];
+        return response()->json($data);
     }
 }
