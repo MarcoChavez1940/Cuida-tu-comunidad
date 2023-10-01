@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
@@ -17,18 +18,33 @@ class TaskController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        $rules = array(
+          'title' => 'required',
+          'description' => 'required',
+          'author' => 'required',
+          'state_id' => 'required|exists:states,id'
+        );    
+        $messages = array(
+          'title.required' => "Task's Title required",
+          'description.required' => "Task's Description required",
+          'author.required' => "Task's Author required",
+          'state_id.required' => "Task's State_id required",
+          'state_id.exists' => 'Not an existing ID',
+        );
+        $validator = Validator::make( $request->all(), $rules, $messages );
+
+        if ($validator->fails()) 
+        {
+          return [
+              'success' => false, 
+              'message' => $validator->errors()
+          ];
+        }
+
         $task = new Task;
         $task->title = $request->title;
         $task->description = $request->description;
@@ -46,17 +62,9 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show(Request $request, Task $task)
     {
-        return response()->json($task);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
-    {
-        //
+      return response()->json($task);
     }
 
     /**

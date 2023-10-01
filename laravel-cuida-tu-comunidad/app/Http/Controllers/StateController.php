@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\State;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class StateController extends Controller
 {
@@ -17,18 +18,27 @@ class StateController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        $rules = array(
+          'name' => 'required',
+          'initials' => 'required',
+        );    
+        $messages = array(
+          'name.required' => "State's Name required",
+          'initials.required' => "State's Initials required",
+        );
+        $validator = Validator::make( $request->all(), $rules, $messages );
+
+        if ($validator->fails()) 
+        {
+          return [
+              'success' => false, 
+              'message' => $validator->errors()
+          ];
+        }
         $state = new State;
         $state->name = $request->name;
         $state->initials = $request->initials;
