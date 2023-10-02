@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('state_id')->index();
-            $table->string('title');
-            $table->string('description');
+            $table->string('title', 100);
+            $table->string('description', 2000);
             $table->timestamps();
-            $table->string('author');
+            $table->string('author', 100);
             $table->double('likes')->default('0');
 
             $table->foreign('state_id')->references('id')->on('states')->cascadeOnDelete();
