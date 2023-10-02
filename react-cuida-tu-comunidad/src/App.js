@@ -1,19 +1,22 @@
+import React from 'react';
 import './App.css';
-import CreateTask from './components/CreateTask/CreateTask';
-
+import { Typography, notification } from 'antd';
 import TaskList from './components/Tasks/TaskList';
 
-function App() {
-  return (
-    <div className="App" style={{ margin: 16 }}>
-      <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'blue' }}>
-        <span>Cuida tu comunidad</span>
-        <div><CreateTask /></div>
+const { Title } = Typography;
 
+function App() {
+  const [notificationApi, contextHolder] = notification.useNotification();
+
+  return (
+    <div className="App" style={{ padding: 16, backgroundColor: 'beige' }}>
+      {contextHolder}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Title level={3}>Cuida tu comunidad</Title>
       </div>
 
       <div className='body'>
-        <TaskList/>
+        <TaskList notificationApi={notificationApi}/>
       </div>
     </div>
   );

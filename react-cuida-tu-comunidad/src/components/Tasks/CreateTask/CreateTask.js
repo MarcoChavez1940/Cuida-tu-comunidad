@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
-import Form from './Form';
+import CreateTaskForm from './CreateTaskForm';
 
-const CreateTask = () => {
+const CreateTask = ({ states, getTasksData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -19,7 +19,7 @@ const CreateTask = () => {
         Crear tarea
       </Button>
       <Modal title="Crear nueva tarea" open={isModalOpen} footer={null} onCancel={handleCancel}>
-        <Form />
+        <CreateTaskForm states={states} closeForm={() => handleCancel()} getTasksData={getTasksData} />
       </Modal>
     </>
   );
