@@ -7,7 +7,6 @@ const CreateTaskForm = ({ states, closeForm, getTasksData }) => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
-    console.log("values", values);
     // Do http request
     const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
       method: 'POST',
@@ -74,7 +73,7 @@ const CreateTaskForm = ({ states, closeForm, getTasksData }) => {
         >
           {states.map(state => {
             return (
-              <Option value={state.id}>{state.name}</Option>
+              <Option key={state.id} value={state.id}>{state.name}</Option>
             )
           })}
         </Select>
